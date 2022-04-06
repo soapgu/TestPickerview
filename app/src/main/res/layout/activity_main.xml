@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="dataContext"
+            type="com.soap.testpickerview.viewmodels.MainViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".MainActivity">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{dataContext.title}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.wx.wheelview.widget.WheelView
+            android:id="@+id/wheelview"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:itemsSource="@{dataContext.buildings}"
+            app:selectedIndex="@{dataContext.selectBuildingIndex}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/wheel_floor"
+            app:onItemSelected="@{(t)->dataContext.onSelectedBuilding(t)}"
+            app:style="@{dataContext.style}" />
+
+        <com.wx.wheelview.widget.WheelView
+            android:id="@+id/wheel_floor"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:itemsSource="@{dataContext.floorModels}"
+            app:selectedIndex="@{dataContext.selectFloorIndex}"
+            app:onItemSelected="@{(t)->dataContext.onSelectedFloor(t)}"
+            app:layout_constraintEnd_toStartOf="@id/wheel_space"
+            app:layout_constraintStart_toEndOf="@+id/wheelview"
+            app:layout_constraintTop_toTopOf="parent"
+            app:style="@{dataContext.style}" />
+
+        <com.wx.wheelview.widget.WheelView
+            android:id="@+id/wheel_space"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:itemsSource="@{dataContext.spaceModels}"
+            app:style="@{dataContext.style}"
+            app:selectedIndex="@{dataContext.selectSpaceIndex}"
+            app:onItemSelected="@{(t)->dataContext.onSelectedSpace(t)}"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/wheel_floor"
+            app:layout_constraintEnd_toEndOf="parent"
+           />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
